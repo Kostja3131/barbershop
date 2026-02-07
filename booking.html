@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarberShop - Онлайн запись</title>
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <a href="/"><h1>BarberShop</h1></a>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="/#services">Услуги</a></li>
+                    <li><a href="/#barbers">Барберы</a></li>
+                    <li><a href="/#gallery">Галерея</a></li>
+                    <li><a href="/#contacts">Контакты</a></li>
+                    <li><a href="/booking.html" class="active">Запись</a></li>
+                </ul>
+            </nav>
+            <div class="phone">
+                <a href="tel:+375291234567">+375 (29) 123-45-67</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="booking-section">
+        <div class="container">
+            <h2 class="section-title">Онлайн запись</h2>
+            
+            <form id="booking-form" class="booking-form" method="POST" action="/booking.html">
+                <div class="form-step active" data-step="1">
+                    <h3>1. Выберите услугу</h3>
+                    <div class="services-grid">
+                        {% for s in services %}
+                        <label class="service-option">
+                            <input type="radio" name="service" value="{{ s.name }}" required>
+                            <div class="service-card">
+                                <div class="service-img-frame">
+                                    <img src="images/service{{ loop.index }}.jpg" alt="{{ s.name }}">
+                                </div>
+                                <h4>{{ s.name }}</h4>
+                                <p>{{ s.price }} руб.</p>
+                            </div>
+                        </label>
+                        {% endfor %}
+                    </div>
+                    <button type="button" class="btn next-step">Далее</button>
+                </div>
+                
+                <div class="form-step" data-step="2">
+                    <h3>2. Выберите барбера</h3>
+                    <div class="barbers-grid">
+                        {% for b in barbers %}
+                        <label class="barber-option">
+                            <input type="radio" name="barber" value="{{ b.name }}" required>
+                            <div class="barber-card">
+                                <div class="barber-img-frame">
+                                    <img src="images/barber{{ loop.index }}.jpg" alt="{{ b.name }}">
+                                </div>
+                                <h4>{{ b.name }}</h4>
+                                <p>{{ b.position }}</p>
+                            </div>
+                        </label>
+                        {% endfor %}
+                    </div>
+                    <div class="step-buttons">
+                        <button type="button" class="btn prev-step">Назад</button>
+                        <button type="button" class="btn next-step">Далее</button>
+                    </div>
+                </div>
+                
+                <div class="form-step" data-step="3">
+                    <h3>3. Выберите дату и время</h3>
+                    <div class="datetime-picker">
+                        <input type="text" id="datepicker" name="date" placeholder="Выберите дату" readonly required>
+                        <input type="hidden" name="time" id="selected-time">
+                        <div id="time-slots" class="time-slots">
+                            </div>
+                    </div>
+                    <div class="step-buttons">
+                        <button type="button" class="btn prev-step ll">Назад</button>
+                        <button type="button" class="btn next-step ll">Далее</button>
+                    </div>
+                </div>
+                
+                <div class="form-step" data-step="4">
+                    <h3>4. Ваши контактные данные</h3>
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Ваше имя" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" name="phone" placeholder="Телефон" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Email (необязательно)">
+                    </div>
+                    <div class="form-group">
+                        <textarea name="comments" placeholder="Комментарии (необязательно)"></textarea>
+                    </div>
+                    <div class="step-buttons">
+                        <button type="button" class="btn prev-step">Назад</button>
+                        <button type="submit" class="btn">Подтвердить запись</button>
+                    </div>
+                </div>
+            </form>
+            
+            <div id="booking-success" class="booking-success" style="display: none;">
+                <i class="fas fa-check-circle"></i>
+                <h3>Запись успешно оформлена!</h3>
+                <p>Мы ждем вас в <span id="success-date"></span> в <span id="success-time"></span></p>
+                <p>Барбер: <span id="success-barber"></span></p>
+                <p>Услуга: <span id="success-service"></span></p>
+                <a href="/" class="btn">Вернуться на главную</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>BarberShop</h2>
+                    <p>© 2029 Все права защищены</p>
+                </div>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-vk"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/l10n/ru.js"></script>
+    <script src="script/booking.js"></script>
+</body>
+</html>
